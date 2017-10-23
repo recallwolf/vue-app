@@ -12,6 +12,7 @@ const express = require('express')
 const webpack = require('webpack')
 const proxyMiddleware = require('http-proxy-middleware')
 const webpackConfig = require('./webpack.dev.conf')
+const appData = require('../data.json')
 
 // default port where dev server listens for incoming traffic
 const port = process.env.PORT || config.dev.port
@@ -23,6 +24,36 @@ const proxyTable = config.dev.proxyTable
 
 const app = express()
 const compiler = webpack(webpackConfig)
+
+const seller = appData.seller
+const goods = appData.goods
+const comments = appData.ratings
+
+const apiRoutes = express.Router()
+
+app.use('/api', apiRoutes)
+
+apiRoutes.get('/seller', (req,res) => {
+  res.json({
+    errno: 0,
+    data: seller
+  })
+})
+
+apiRoutes.get('/goods', (req,res) => {
+  res.json({
+    errno: 0,
+    data: goods
+  })
+})
+
+apiRoutes.get('/comments', (req,res) => {
+  res.json({
+    errno: 0,
+    data: comments
+  })
+})
+
 
 const devMiddleware = require('webpack-dev-middleware')(compiler, {
   publicPath: webpackConfig.output.publicPath,

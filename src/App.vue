@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <top-header></top-header>
+    <top-header v-bind:seller="seller"></top-header>
     <mid-nav></mid-nav>
     <router-view></router-view>
   </div>
@@ -10,12 +10,27 @@
   import topHeader from '@/components/header'
   import midNav from '@/components/nav'
   export default {
+    data(){
+      return {
+        seller: {}
+      }
+    },
     name: 'app',
     components: {
       midNav,
       topHeader
+    },
+    created(){
+      this.$http.get('/api/seller').then(response => {
+        response = response.body
+        if(response.errno === 0){
+          this.seller = response;
+        }
+        console.log(this.seller)
+      })
     }
   }
+
 </script>
 
 <style>
