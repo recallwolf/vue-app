@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <top-header v-bind:seller="seller"></top-header>
+    <top-header v-bind:seller="seller" v-if="seller!=undefined"></top-header>
     <mid-nav></mid-nav>
     <router-view></router-view>
   </div>
@@ -12,7 +12,7 @@
   export default {
     data(){
       return {
-        seller: {}
+        seller: undefined
       }
     },
     name: 'app',
