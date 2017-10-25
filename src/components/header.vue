@@ -39,6 +39,7 @@
 	.header{
 		display: flex;
 		flex-direction: column;
+		height: 134px;
 		width: 100%;
 		color: #fff;
 		background-color: rgba(7,17,27,0.5);
