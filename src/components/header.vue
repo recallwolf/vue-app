@@ -158,7 +158,7 @@
 		margin: -64px auto 0 auto;
 		clear: both;
 		font-size: 32px;
-		color: rgba(7,17,27,0.9);
+		color: white;
 	}
 </style>
 
