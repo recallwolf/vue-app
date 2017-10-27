@@ -10,7 +10,7 @@
 				<div class="third">{{seller.data.supports[0].description}}</div>
 				<div class="support" v-if="seller.data.supports" v-on:click="display">
 					<span class="count">{{seller.data.supports.length}}个</span>
-					<i></i>
+					<span class="icon-keyboard_arrow_right icon-arrow"></span>
 				</div>
 			</div>
 		</div>
@@ -29,7 +29,7 @@
 				</div>
 			</div>
 			<div class="detail-close" v-on:click="display">
-				x
+				<span class="icon-close icon-x"></span>
 			</div>
 		</div>
 	</div>
@@ -95,6 +95,10 @@
 	.count{
 		font-size: 10px;
 	}
+	.icon-arrow{
+		font-size: 14px;
+		vertical-align: middle;
+	}
 	.sub-title{
 		flex: 1;
 		padding: 0 22px 0 12px;
@@ -102,8 +106,8 @@
 		background-color: rgba(7,17,27,0.2);
 		line-height: 28px;
 		overflow: hidden;
-		white-space: nowrap;
 		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 	.broadcast{
 		font-size: 10px;
@@ -159,6 +163,10 @@
 		clear: both;
 		font-size: 32px;
 		color: white;
+	}
+	.icon-x{
+		font-size: 32px;
+		color: rgba(255,255,255,0.5);
 	}
 </style>
 

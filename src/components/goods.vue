@@ -17,7 +17,15 @@
 									<div class="food-name">{{food.name}}</div>
 									<div class="food-des" v-if="food.description!=''">{{food.description}}</div>
 									<div class="food-count">月售:{{food.sellCount}}份 好评率:{{food.rating}}%</div>
-									<div class="food-price">¥{{food.price}} <span class="food-old" v-show="food.oldPrice!=''">¥{{food.oldPrice}}</span></div>
+									<div class="food-price">
+										¥{{food.price}} 
+										<span class="food-old" v-show="food.oldPrice!=''">
+											¥{{food.oldPrice}}
+										</span>
+										<span class="icon-remove_circle_outline icon-remove" v-on:click="del" v-show="num"></span>
+										<span class="num" v-show="num">{{num}}</span>
+										<span class="icon-add_circle icon-add" v-on:click="add"></span>
+									</div>
 								</div>
 							</div>
 						</li>
@@ -25,7 +33,7 @@
 				</li>
 			</ul>
 		</div>
-		<cart></cart>
+		<cart v-bind:num="num" v-bind:seller="seller"></cart>
 	</div>
 </template>
 
@@ -124,6 +132,29 @@
 		line-height: 24px;
 		text-decoration: line-through;
 	}
+	.icon-remove{
+		position: absolute;
+		right: 64px;
+		font-size: 22px;
+		line-height: 24px;
+		color: rgb(0,160,220);
+	}
+	.num{
+		text-align: center;
+		width: 28px;
+		position: absolute;
+		right: 38px;
+		font-size: 12px;
+		line-height: 24px;
+		color: rgb(147,153,159);
+	}
+	.icon-add{
+		position: absolute;
+		right: 18px;
+		font-size: 22px;
+		line-height: 24px;
+		color: rgb(0,160,220);
+	}
 </style>
 
 <script>
@@ -131,11 +162,14 @@
     import cart from '@/components/shoppingcart'
 	export default{
 		props: {
-			seller: {}
+			seller: {
+				type: Object
+			},
 		},
 		data(){
 			return{
-				goods: {}
+				goods: {},
+				num: 0
 			}
 		},
 		components: {
@@ -156,8 +190,20 @@
 		},
 		methods: {
 			scroll(){
-				this.menuScroll = new bscroll(this.$refs.menu, {});
-				this.foodScroll = new bscroll(this.$refs.goods, {});
+				this.menuScroll = new bscroll(this.$refs.menu, {
+					click: true
+				});
+				this.foodScroll = new bscroll(this.$refs.goods, {
+					click: true
+				});
+			},
+			add(){
+				this.num++;
+			},
+			del(){
+				if(this.num > 0){
+					this.num--;
+				}
 			}
 		}
 	}

@@ -2,8 +2,8 @@
 	<div class="cart">
 		<div class="icon">
 			<div class="outside">
-				<div class="inside">
-					
+				<div v-bind:class="{insidefull: num, inside: true}">
+					<span v-bind:class="{'icon-shopping_cart': true, 'cart-icon': true, carticonfull: num}"></span>
 				</div>
 			</div>
 		</div>
@@ -12,10 +12,10 @@
 				¥10
 			</div>
 			<div class="filter">
-				另需元配送费
+				另需{{seller.data.deliveryPrice}}元配送费
 			</div>
 		</div>
-		<div class="result">结算</div>
+		<div v-bind:class="{result: true, resultfull: num}">结算</div>
 	</div>
 </template>
 
@@ -52,6 +52,30 @@
 		background-color: rgba(221,221,221,0.1);
 		border-radius: 50%;
 	}
+	.insidefull{
+		position: relative;
+		top: 5px;
+		left: 5px;
+		bottom: 5px;
+		width: 40px;
+		height: 40px;
+		background-color: rgb(0,160,220);
+		border-radius: 50%;
+	}
+	.cart-icon{
+		font-size: 22px;
+		line-height: 22px;
+		color: rgba(255,255,255,0.4);
+		position: relative;
+		top: 19%;
+	}
+	.carticonfull{
+		font-size: 22px;
+		line-height: 22px;
+		color: rgb(255,255,255);
+		position: relative;
+		top: 19%;
+	}
 	.msg{
 		flex: 1;
 		text-align: left;
@@ -70,7 +94,7 @@
 		display: inline-block;
 		padding-left: 6px;
 		border-left: 1px solid rgba(255,255,255,0.4);
-		font-weight: lighter;
+		font-weight: 500;
 		font-size: 14px;
 		line-height: 16px;
 		color: rgba(255,255,255,0.4);
@@ -86,7 +110,26 @@
 		background-color: #2b343c;
 		font-weight: 700;
 	}
+	.resultfull{
+		flex: 0 0 95px;
+		width: 95px;
+		padding-top: 14px;
+		line-height: 24px;
+		color: #fff;
+		text-align: center;
+		vertical-align: middle;
+		background-color: #00b43c;
+		font-weight: 700;
+	}
 </style>
 
 <script>
+	export default{
+		props: {
+			num: {},
+			seller: {
+				type: Object
+			},
+		}
+	}
 </script>
