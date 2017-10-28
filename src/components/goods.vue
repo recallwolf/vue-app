@@ -22,10 +22,8 @@
 										<span class="food-old" v-show="food.oldPrice!=''">
 											¥{{food.oldPrice}}
 										</span>
-										<span class="icon-remove_circle_outline icon-remove" v-on:click="del" v-show="num"></span>
-										<span class="num" v-show="num">{{num}}</span>
-										<span class="icon-add_circle icon-add" v-on:click="add"></span>
 									</div>
+									<clickbutton v-bind:food="food" v-bind:cartList="cartList"></clickbutton>
 								</div>
 							</div>
 						</li>
@@ -33,9 +31,55 @@
 				</li>
 			</ul>
 		</div>
-		<cart v-bind:num="num" v-bind:seller="seller"></cart>
+		<cart v-bind:seller="seller" v-bind:cartList="cartList"></cart>
 	</div>
 </template>
+
+<script>
+    import bscroll from 'better-scroll'
+    import cart from '@/components/shoppingcart'
+    import clickbutton from '@/components/clickbutton'
+	export default{
+		props: {
+			seller: {
+				type: Object
+			}
+		},
+		data(){
+			return{
+				goods: {},
+				cartList: []
+			}
+		},
+		components: {
+			cart,
+			clickbutton
+		},
+		created(){
+			this.$http.get('/api/goods').then(response => {
+        		response = response.body
+        		if(response.errno === 0){
+          			this.goods = response;
+          			//console.log(this.goods);
+          			this.$nextTick(() => {
+          					this.scroll();
+          				}
+          			);
+        		}
+			})
+		},
+		methods: {
+			scroll(){
+				this.menuScroll = new bscroll(this.$refs.menu, {
+					click: true
+				});
+				this.foodScroll = new bscroll(this.$refs.goods, {
+					click: true
+				});
+			}
+		}
+	}
+</script>
 
 <style scoped>
 	.goods{
@@ -124,6 +168,7 @@
 		font-weight: 700;
 		line-height: 24px;
 		padding-bottom: 9px;
+		display: inline-block;
 	}
 	.food-old{
 		font-size: 12px;
@@ -132,80 +177,4 @@
 		line-height: 24px;
 		text-decoration: line-through;
 	}
-	.icon-remove{
-		position: absolute;
-		right: 64px;
-		font-size: 22px;
-		line-height: 24px;
-		color: rgb(0,160,220);
-	}
-	.num{
-		text-align: center;
-		width: 28px;
-		position: absolute;
-		right: 38px;
-		font-size: 12px;
-		line-height: 24px;
-		color: rgb(147,153,159);
-	}
-	.icon-add{
-		position: absolute;
-		right: 18px;
-		font-size: 22px;
-		line-height: 24px;
-		color: rgb(0,160,220);
-	}
 </style>
-
-<script>
-    import bscroll from 'better-scroll'
-    import cart from '@/components/shoppingcart'
-	export default{
-		props: {
-			seller: {
-				type: Object
-			},
-		},
-		data(){
-			return{
-				goods: {},
-				num: 0
-			}
-		},
-		components: {
-			cart
-		},
-		created(){
-			this.$http.get('/api/goods').then(response => {
-        		response = response.body
-        		if(response.errno === 0){
-          			this.goods = response;
-          			//console.log(this.goods);
-          			this.$nextTick(() => {
-          					this.scroll();
-          				}
-          			);
-        		}
-			})
-		},
-		methods: {
-			scroll(){
-				this.menuScroll = new bscroll(this.$refs.menu, {
-					click: true
-				});
-				this.foodScroll = new bscroll(this.$refs.goods, {
-					click: true
-				});
-			},
-			add(){
-				this.num++;
-			},
-			del(){
-				if(this.num > 0){
-					this.num--;
-				}
-			}
-		}
-	}
-</script>
-

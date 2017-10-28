@@ -35,6 +35,24 @@
 	</div>
 </template>
 
+<script>
+	export default {
+		props: {
+			seller:{
+				type: Object
+			}
+		},
+		data(){
+			return {show: false}
+		},
+		methods: {
+			display(){
+				this.show = !this.show;
+			}
+		}
+	}
+</script>
+
 <style scoped>
 	.header{
 		display: flex;
@@ -169,21 +187,3 @@
 		color: rgba(255,255,255,0.5);
 	}
 </style>
-
-<script>
-	export default {
-		props: {
-			seller:{
-				type: Object
-			}
-		},
-		data(){
-			return {show: false}
-		},
-		methods: {
-			display(){
-				this.show = !this.show;
-			}
-		}
-	}
-</script>

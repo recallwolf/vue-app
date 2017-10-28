@@ -2,8 +2,8 @@
 	<div class="cart">
 		<div class="icon">
 			<div class="outside">
-				<div v-bind:class="{insidefull: num, inside: true}">
-					<span v-bind:class="{'icon-shopping_cart': true, 'cart-icon': true, carticonfull: num}"></span>
+				<div class="inside">
+					<span class="icon-shopping_cart cart-icon"></span>
 				</div>
 			</div>
 		</div>
@@ -15,9 +15,22 @@
 				另需{{seller.data.deliveryPrice}}元配送费
 			</div>
 		</div>
-		<div v-bind:class="{result: true, resultfull: num}">结算</div>
+		<div class="result">结算</div>
 	</div>
 </template>
+
+<script>
+	export default{
+		props: {
+			seller: {
+				type: Object
+			},
+			cartList: {
+				type: Array
+			}
+		}
+	}
+</script>
 
 <style scoped>
 	.cart{
@@ -121,15 +134,5 @@
 		background-color: #00b43c;
 		font-weight: 700;
 	}
-</style>
 
-<script>
-	export default{
-		props: {
-			num: {},
-			seller: {
-				type: Object
-			},
-		}
-	}
-</script>
+</style>
