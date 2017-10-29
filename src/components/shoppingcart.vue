@@ -5,7 +5,7 @@
 				<div class="inside" v-show="cartList.length == 0">
 					<span class="icon-shopping_cart cart-icon"></span>
 				</div>
-				<div class="insidefull" v-show="cartList.length > 0">
+				<div class="insidefull" v-show="cartList.length > 0" v-on:click="cartdispaly">
 					<span class="icon-shopping_cart carticonfull"></span>
 				</div>
 			</div>
@@ -20,7 +20,35 @@
 		</div>
 		<div class="result" v-show="cartList.length == 0">结算</div>
 		<div class="resultfull" v-show="cartList.length > 0">结算</div>
+		<div class="mask" v-show="cartShow">
+			<div class="cart-content" >
+				<div class="cart-title">
+					<div class="buycart">
+						购物车
+					<span class="empty" v-on:click="cartdispaly">
+						清空
+					</span>
+					</div>
+				</div>
+				<div class="cartitem">
+					<ul>
+						<li>
+							<div class="layout">
+								<div class="itemname">
+									银耳莲子
+								</div>
+								<div class="itemprice">
+								¥10
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
 	</div>
+
+
 </template>
 
 <script>
@@ -31,6 +59,16 @@
 			},
 			cartList: {
 				type: Array
+			}
+		},
+		data(){
+			return{
+				cartShow: false
+			}
+		},
+		methods:{
+			cartdispaly(){
+				this.cartShow = !this.cartShow;
 			}
 		}
 	}
@@ -138,5 +176,70 @@
 		background-color: #00b43c;
 		font-weight: 700;
 	}
-
+	.mask{
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(7,17,27,0.6);
+		z-index: -1;
+	}
+	.cart-content{
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		height: 306px;
+		width: 100%;
+		background-color: #fff;
+		overflow: hidden;
+	}
+	.cart-title{
+		position: relative;
+		top: 0;
+		left: 0;
+		height: 40px;
+		background-color: #f3f5f7;
+		border-bottom: 1px solid rgba(7,17,27,0.1);
+	}
+	.buycart{
+		font-size: 14px;
+		font-weight: 200;
+		line-height: 40px;
+		color: rgb(7,17,27);
+		text-align: left;
+		padding-left: 18px;
+	}
+	.empty{
+		position: absolute;
+		font-size: 12px;
+		color: rgb(0,160,220);
+		line-height: 40px;
+		right: 18px;
+	}
+	.cartitem{
+		padding-left: 18px;
+		padding-right: 18px;
+	}
+	.layout{
+		display: flex;
+		border-bottom: 1px solid rgba(7,17,27,0.1);
+		padding-top: 12px;
+		line-height: 24px;
+	}
+	.itemname{
+		flex: 1;
+		text-align: left;
+		padding-bottom: 12px;
+		font-size: 14px;
+		color: rgb(7,17,27);
+	}
+	.itemprice{
+		flex: 1;
+		text-align: left;
+		padding-left: 18px;
+		font-size: 14px;
+		font-weight: 600;
+		color: rgb(240,20,20);
+	}
 </style>
