@@ -2,8 +2,11 @@
 	<div class="cart">
 		<div class="icon">
 			<div class="outside">
-				<div class="inside">
+				<div class="inside" v-show="cartList.length == 0">
 					<span class="icon-shopping_cart cart-icon"></span>
+				</div>
+				<div class="insidefull" v-show="cartList.length > 0">
+					<span class="icon-shopping_cart carticonfull"></span>
 				</div>
 			</div>
 		</div>
@@ -15,7 +18,8 @@
 				另需{{seller.data.deliveryPrice}}元配送费
 			</div>
 		</div>
-		<div class="result">结算</div>
+		<div class="result" v-show="cartList.length == 0">结算</div>
+		<div class="resultfull" v-show="cartList.length > 0">结算</div>
 	</div>
 </template>
 

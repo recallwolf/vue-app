@@ -2,12 +2,14 @@
 	<div class="goods">
 		<div class="menu" ref="menu">
 			<ul>
-				<li class="list" v-for="good in goods.data"><span class="me-content">{{good.name}}</span></li>
+				<li class="list" v-for="(good,index) in goods.data" v-bind:class="{current: index===currentIndex}" v-on:click="selectMenu(index)">
+					<span class="me-content" v-bind:class="{'current-content': index===currentIndex}">{{good.name}}</span>
+				</li>
 			</ul>
 		</div>
 		<div class="goods-content" ref="goods">
 			<ul>
-				<li v-for="good in goods.data">
+				<li v-for="good in goods.data"  class="list-hook">
 					<div class="food-title">{{good.name}}</div>
 					<ul>
 						<li v-for="food in good.foods" class="food-item">
@@ -48,21 +50,37 @@
 		data(){
 			return{
 				goods: {},
-				cartList: []
+				cartList: [],
+				listHeight: [],
+				scrollY: 0,
 			}
 		},
 		components: {
 			cart,
 			clickbutton
 		},
+		computed: {
+			currentIndex(){
+				for (let i = 0; i < this.listHeight.length; i++){
+          			let heightOne = this.listHeight[i];
+          			let heightTwo = this.listHeight[i + 1];
+          			if(heightTwo){
+          				if (this.scrollY >= heightOne && this.scrollY < heightTwo){
+            				return i;
+          				}
+        			}
+        		}
+        		return false;
+        	}
+      	},
 		created(){
 			this.$http.get('/api/goods').then(response => {
-        		response = response.body
+        		response = response.body;
         		if(response.errno === 0){
           			this.goods = response;
-          			//console.log(this.goods);
           			this.$nextTick(() => {
           					this.scroll();
+          					this.computeHeight();
           				}
           			);
         		}
@@ -74,8 +92,27 @@
 					click: true
 				});
 				this.foodScroll = new bscroll(this.$refs.goods, {
+					probeType: 3,
 					click: true
 				});
+				this.foodScroll.on('scroll', (pos) => {
+					this.scrollY = Math.abs(Math.round(pos.y));
+				});
+			},
+			selectMenu(index){
+				let goodList = this.$refs.goods.getElementsByClassName('list-hook');
+				let el = goodList[index];
+        		this.foodScroll.scrollToElement(el, 300);
+			},
+			computeHeight(){
+				let goodList = this.$refs.goods.getElementsByClassName('list-hook');
+				let height = 0;
+				this.listHeight.push(height);
+				for(let x in goodList){
+					let tmp = goodList[x];
+					height+= tmp.clientHeight;
+					this.listHeight.push(height);
+				}
 			}
 		}
 	}
@@ -103,8 +140,14 @@
 		line-height: 54px;
 		padding: 0 12px;
 	}
+	.current{
+		padding: 0 12px;
+        margin-top: -1px;
+        background: #fff;
+	}
 	.me-content{
 		display: table-cell;
+		text-align: center;
 		vertical-align: middle;
 		border-bottom-style:solid;
 		border-bottom-width: 1px;
@@ -112,6 +155,10 @@
 		line-height: 14px;
 		font-size: 12px;
 		font-weight: 200;
+	}
+	.current-content{
+		font-weight: 700;
+		border: none;
 	}
 	.goods-content{
 		flex: 1;
@@ -128,10 +175,12 @@
 	}
 	.food-item{
 		margin: 18px;
-		margin-bottom: -1px;
 		border-style: solid;
 		border-bottom-width: 1px;
 		border-color: rgba(7,17,27,0.1);
+	}
+	.food-item:last-child{
+		border: none;
 	}
 	.food-icon{
 		display: inline-block;
