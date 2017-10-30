@@ -6,7 +6,9 @@
 					<span class="icon-shopping_cart cart-icon"></span>
 				</div>
 				<div class="insidefull" v-show="cartList.length > 0" v-on:click="cartdispaly">
-					<span class="icon-shopping_cart carticonfull"></span>
+					<span class="icon-shopping_cart carticonfull">
+						<span class="totalcount">{{totalcount}}</span>
+					</span>
 				</div>
 			</div>
 		</div>
@@ -18,8 +20,8 @@
 				另需{{seller.data.deliveryPrice}}元配送费
 			</div>
 		</div>
-		<div class="result" v-show="cartList.length == 0">¥20起送</div>
-		<div class="resultfull" v-show="cartList.length > 0">结算</div>
+		<div class="result" v-show="totalprice < seller.data.minPrice">¥{{seller.data.minPrice}}起送</div>
+		<div class="resultfull" v-show="totalprice >= seller.data.minPrice">结算</div>
 		<div class="mask" v-show="cartShow">
 			<div class="cart-content" >
 				<div class="cart-title" ref="cart">
@@ -82,6 +84,14 @@
 					totalprice += item.count * item.price;
 				}
 				return totalprice;
+			},
+			totalcount(){
+				let totalcount = 0;
+				for(let index in this.cartList){
+					let item = this.cartList[index];
+					totalcount += item.count;
+				}
+				return totalcount;
 			}
 		},
 		methods:{
@@ -134,6 +144,20 @@
 		height: 40px;
 		background-color: rgb(0,160,220);
 		border-radius: 50%;
+	}
+	.totalcount{
+		position: absolute;
+		bottom: 18px;
+		left: 16px;
+		background-color: rgb(240,20,20);
+		padding-left: 8px;
+		padding-right: 8px;
+		width: 8px;
+		font-size: 14px;
+		font-weight: 700;
+		line-height: 16px;
+		color: rgb(255,255,255);
+		border-radius: 12px;
 	}
 	.cart-icon{
 		font-size: 22px;
