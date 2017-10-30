@@ -1,5 +1,5 @@
 <template>
-	<div class="iconx"> 
+	<div> 
 		<span class="icon-remove_circle_outline icon-remove" v-on:click="del" v-show="food.count"></span>
 		<span class="num" v-show="food.count">{{food.count}}</span>
 		<span class="icon-add_circle icon-add" v-on:click="add"></span>
@@ -17,20 +17,28 @@
 				type: Array
 			}
 		},
-		created(){
-			Vue.set(this.food, 'count', 0);
-		},
 		methods:{
 			add(){
-				this.food.count++;
-				this.cartList.push(this.food);
-				console.log(this.cartList);
+				if(this.food.count == false||this.food.count == undefined){
+					Vue.set(this.food, 'count', 0);
+					this.cartList.push(this.food);
+				}
+				this.food.count++;			
 			},
 			del(){
-				if(this.food.count){
-					this.food.count--;
-					this.cartList.splice(0, 1);
-					//console.log(this.cartList);
+				this.food.count--;
+				if(this.food.count === 0){
+					let foodName = this.food.name;
+					for(let x in this.cartList){
+						let toArray = [this.cartList[x]];
+						let index = toArray.findIndex(function(value){
+							return value.name === foodName;
+						});	
+						if(index >= 0){
+							this.cartList.splice(index,1);
+
+						}
+					}
 				}
 			}
 		}
@@ -38,11 +46,6 @@
 </script>
 
 <style>
-	.iconx{
-		display: inline-block;
-		float: left;
-		padding-top: 3px;
-	}
 	.icon-remove{
 		position: absolute;
 		right: 60px;

@@ -12,34 +12,37 @@
 		</div>
 		<div class="msg">
 			<div class="price">
-				¥10
+				¥{{totalprice}}
 			</div>
 			<div class="filter">
 				另需{{seller.data.deliveryPrice}}元配送费
 			</div>
 		</div>
-		<div class="result" v-show="cartList.length == 0">结算</div>
+		<div class="result" v-show="cartList.length == 0">¥20起送</div>
 		<div class="resultfull" v-show="cartList.length > 0">结算</div>
 		<div class="mask" v-show="cartShow">
 			<div class="cart-content" >
-				<div class="cart-title">
+				<div class="cart-title" ref="cart">
 					<div class="buycart">
 						购物车
-					<span class="empty" v-on:click="cartdispaly">
-						清空
+					<span class="empty" v-on:click="clear">
+						<span v-on:click="cartdispaly">
+							清空
+						</span>
 					</span>
 					</div>
 				</div>
 				<div class="cartitem">
 					<ul>
-						<li>
+						<li v-for="item in cartList">
 							<div class="layout">
 								<div class="itemname">
-									银耳莲子
+									{{item.name}}/{{item.count}}份
 								</div>
 								<div class="itemprice">
-								¥10
+									¥{{item.price*item.count}} 
 								</div>
+								<clickbutton v-bind:cartList="cartList" v-bind:food="item"></clickbutton>
 							</div>
 						</li>
 					</ul>
@@ -47,11 +50,10 @@
 			</div>
 		</div>
 	</div>
-
-
 </template>
 
 <script>
+	import clickbutton from '@/components/clickbutton'
 	export default{
 		props: {
 			seller: {
@@ -59,11 +61,27 @@
 			},
 			cartList: {
 				type: Array
+			},
+			clear: {
+				type: Function
 			}
 		},
 		data(){
 			return{
 				cartShow: false
+			}
+		},
+		components: {
+			clickbutton
+		},
+		computed: {
+			totalprice(){
+				let totalprice = 0;
+				for(let index in this.cartList){
+					let item = this.cartList[index]; 
+					totalprice += item.count * item.price;
+				}
+				return totalprice;
 			}
 		},
 		methods:{

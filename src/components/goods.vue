@@ -25,7 +25,7 @@
 											¥{{food.oldPrice}}
 										</span>
 									</div>
-									<clickbutton v-bind:food="food" v-bind:cartList="cartList"></clickbutton>
+									<clickbutton v-bind:food="food" v-bind:cartList="cartList" class="iconx"></clickbutton>
 								</div>
 							</div>
 						</li>
@@ -33,7 +33,7 @@
 				</li>
 			</ul>
 		</div>
-		<cart v-bind:seller="seller" v-bind:cartList="cartList"></cart>
+		<cart v-bind:seller="seller" v-bind:cartList="cartList" v-bind:clear="clear"></cart>
 	</div>
 </template>
 
@@ -113,6 +113,12 @@
 					height+= tmp.clientHeight;
 					this.listHeight.push(height);
 				}
+			},
+			clear(){
+				for(let index in this.cartList){
+					this.cartList[index].count = 0;
+					this.cartList.length = 0;
+				}	
 			}
 		}
 	}
@@ -225,5 +231,10 @@
 		font-weight: 700;
 		line-height: 24px;
 		text-decoration: line-through;
+	}
+	.iconx{
+		display: inline-block;
+		float: left;
+		padding-top: 3px;
 	}
 </style>
