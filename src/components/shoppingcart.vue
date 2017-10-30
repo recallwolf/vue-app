@@ -42,7 +42,7 @@
 								<div class="itemprice">
 									¥{{item.price*item.count}} 
 								</div>
-								<clickbutton v-bind:cartList="cartList" v-bind:food="item"></clickbutton>
+								<clickbutton v-bind:cartList="cartList" v-bind:food="item" v-on:display="cartdispaly"></clickbutton>
 							</div>
 						</li>
 					</ul>

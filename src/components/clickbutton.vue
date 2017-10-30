@@ -39,6 +39,9 @@
 
 						}
 					}
+					if(this.cartList.length === 0){
+						this.$emit('display');
+					}
 				}
 			}
 		}
