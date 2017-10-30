@@ -117,8 +117,8 @@
 			clear(){
 				for(let index in this.cartList){
 					this.cartList[index].count = 0;
-					this.cartList.length = 0;
-				}	
+				}
+				this.cartList.length = 0;	
 			}
 		}
 	}

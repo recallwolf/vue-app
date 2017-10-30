@@ -35,7 +35,7 @@
 							return value.name === foodName;
 						});	
 						if(index >= 0){
-							this.cartList.splice(index,1);
+							this.cartList.splice(x,1);
 
 						}
 					}

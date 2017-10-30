@@ -26,8 +26,7 @@
         if(response.errno === 0){
           this.seller = response;
         }
-        console.log(this.seller)
-      })
+      });
     }
   }
 

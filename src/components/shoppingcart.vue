@@ -28,9 +28,9 @@
 					<div class="buycart">
 						购物车
 					<span class="empty" v-on:click="clear">
-						<span v-on:click="cartdispaly">
+						<div v-on:click="cartdispaly">
 							清空
-						</span>
+						</div>
 					</span>
 					</div>
 				</div>
@@ -150,9 +150,9 @@
 		bottom: 18px;
 		left: 16px;
 		background-color: rgb(240,20,20);
-		padding-left: 8px;
-		padding-right: 8px;
-		width: 8px;
+		padding-left: 3px;
+		padding-right: 3px;
+		width: 20px;
 		font-size: 14px;
 		font-weight: 700;
 		line-height: 16px;
