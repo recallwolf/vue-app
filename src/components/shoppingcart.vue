@@ -22,40 +22,42 @@
 		</div>
 		<div class="result" v-show="totalprice < seller.data.minPrice">¥{{seller.data.minPrice}}起送</div>
 		<div class="resultfull" v-show="totalprice >= seller.data.minPrice">结算</div>
-		<div class="mask" v-show="cartShow">
-			<div class="cart-content" >
-				<div class="cart-title" ref="cart">
-					<div class="buycart">
-						购物车
+		<div class="mask" v-show="cartShow" v-on:click="cartdispaly">
+		</div>
+		<div class="cart-content" v-show="cartShow">
+			<div class="cart-title" ref="cart">
+				<div class="buycart">
+					购物车
 					<span class="empty" v-on:click="clear">
 						<div v-on:click="cartdispaly">
 							清空
 						</div>
 					</span>
-					</div>
 				</div>
-				<div class="cartitem">
-					<ul>
-						<li v-for="item in cartList">
-							<div class="layout">
-								<div class="itemname">
-									{{item.name}}/{{item.count}}份
-								</div>
-								<div class="itemprice">
-									¥{{item.price*item.count}} 
-								</div>
-								<clickbutton v-bind:cartList="cartList" v-bind:food="item" v-on:display="cartdispaly"></clickbutton>
+			</div>
+			<div class="cartitem" ref="cartitem">
+				<ul>
+					<li v-for="item in cartList">
+						<div class="layout">
+							<div class="itemname">
+								{{item.name}}/{{item.count}}份
 							</div>
-						</li>
-					</ul>
-				</div>
+							<div class="itemprice">
+								¥{{item.price*item.count}} 
+							</div>
+							<clickbutton v-bind:cartList="cartList" v-bind:food="item" v-on:display="cartdispaly"></clickbutton>
+						</div>
+					</li>
+				</ul>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
+	import bscroll from 'better-scroll'
 	import clickbutton from '@/components/clickbutton'
+	import Vue from 'vue'
 	export default{
 		props: {
 			seller: {
@@ -92,8 +94,24 @@
 					totalcount += item.count;
 				}
 				return totalcount;
-			}
+			},
 		},
+		created(){
+			Vue.nextTick(() => {
+				this.scroll = new bscroll(this.$refs.cartitem, {
+                	click: true
+            	})
+			})
+		},
+		watch: {
+			cartShow: function(){
+				if(this.cartShow) {
+          			Vue.nextTick(() => {
+          				this.scroll.refresh()
+   					})
+   				}
+   			}
+   		},
 		methods:{
 			cartdispaly(){
 				this.cartShow = !this.cartShow;
@@ -234,7 +252,7 @@
 		height: 306px;
 		width: 100%;
 		background-color: #fff;
-		overflow: hidden;
+		z-index: -1;
 	}
 	.cart-title{
 		position: relative;
@@ -253,15 +271,18 @@
 		padding-left: 18px;
 	}
 	.empty{
-		position: absolute;
+		position: fixed;
 		font-size: 12px;
 		color: rgb(0,160,220);
 		line-height: 40px;
 		right: 18px;
+		background-color: #f3f5f7;
 	}
 	.cartitem{
+		height: 218px;
 		padding-left: 18px;
 		padding-right: 18px;
+		overflow: hidden;
 	}
 	.layout{
 		display: flex;
