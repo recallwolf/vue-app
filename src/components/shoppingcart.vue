@@ -100,15 +100,15 @@
 			Vue.nextTick(() => {
 				this.scroll = new bscroll(this.$refs.cartitem, {
                 	click: true
-            	})
+            	});
 			})
 		},
 		watch: {
 			cartShow: function(){
 				if(this.cartShow) {
           			Vue.nextTick(() => {
-          				this.scroll.refresh()
-   					})
+          				this.scroll.refresh();
+   					});
    				}
    			}
    		},
