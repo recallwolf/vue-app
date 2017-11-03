@@ -26,7 +26,23 @@
 			<div class="detail-main clearfix">
 				<div class="detail-content">
 					<div class="name">{{seller.data.name}}</div>
-					<star v-bind:size="48" v-bind:score="seller.data.score"></star>
+					<star class="detail-star" v-bind:size="48" v-bind:score="seller.data.score"></star>
+					<div class="report-x">
+						<div class="line-1"></div>
+						<div class="discount">优惠信息</div>
+						<div class="line-1"></div>
+					</div>
+					<div class="detail-discount" v-for="detailItem in seller.data.supports">
+						<div class="discount-item">{{detailItem.description}}</div>
+					</div>
+					<div class="detail-report">
+						<div class="report-x">
+							<div class="line-2"></div>
+							<div class="detail-report-main">商家公告</div>
+							<div class="line-2"></div>
+						</div>
+						<div class="detail-report-text">{{seller.data.bulletin}}</div>
+					</div>
 				</div>
 			</div>
 			<div class="detail-close" v-on:click="display">
@@ -175,6 +191,9 @@
 	}
 	.clearfix{
 		display: inline-block;
+		text-align: center;
+		padding-left: 36px;
+		padding-right: 36px;
 	}
 	.clearfix:after{
 		content: ".";
@@ -189,12 +208,66 @@
 	.detail-content{
 		margin-top: 64px;
 		padding-bottom: 64px;
+		text-align: center;
 	}
 	.name{
+		font-size: 18px;
+		font-weight: 700;
+		line-height: 18px;
+		color: rgb(255,255,255);
+	}
+	.detail-star{
+		margin-top: 16px;
+	}
+	.discount{
+		flex: 1;
+		padding-top: 28px;
+		padding-bottom: 24px;
 		font-size: 16px;
 		font-weight: 700;
-		line-height: 16px;
+	}
+	.detail-discount{
+		position: relative;
+		left: 12px;
+	}
+	.discount-item{
+		padding-bottom: 12px;
+		text-align: left;
+		font-size: 14px;
+		font-weight: 200;
 		color: rgb(255,255,255);
+		line-height: 14px;
+	}
+	.report-x{
+		display: flex;
+	}
+	.line-1{
+		flex: 1;
+		position: relative;
+		top: -30px;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+	}
+	.line-2{
+		flex: 1;
+        position: relative;
+        top: -6px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+	}
+	.detail-report{
+		padding-top: 14px;
+	}
+	.detail-report-main{
+		flex: 1;
+		font-size: 16px;
+		font-weight: 700;
+	}
+	.detail-report-text{
+		text-align: left;
+		padding-left: 12px;
+		padding-top: 24px;
+		font-size: 14px;
+		font-weight: 200;
+		line-height: 25px;
 	}
 	.detail-close{
 		position: relative;

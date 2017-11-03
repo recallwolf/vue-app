@@ -7,9 +7,16 @@
 				<div class="textthird">高于周边商家{{seller.data.rankRate}}%</div>
 			</div>
 			<div class="score-content">
-				<div class="scorecontent-text">服务态度</div>
-				<div class="scorecontent-text">商品评分</div>
-				<div class="deliveryTime">送达时间
+				<div class="scorecontent-text">
+					服务态度 
+					<span><star class="service" v-bind:size="24" v-bind:score="seller.data.serviceScore"></star></span>
+				</div>
+				<div class="scorecontent-text">
+					商品评分
+					<star class="food" v-bind:size="24" v-bind:score="seller.data.foodScore"></star>
+				</div>
+				<div class="deliveryTime">
+					送达时间
 					<span class="time">{{seller.data.deliveryTime}}分钟</span>
 				</div>
 			</div>
@@ -36,6 +43,7 @@
 </template>
 
 <script>
+	import star from '@/components/star'
 	export default{
 		props: {
 			seller: {
@@ -46,6 +54,9 @@
 			return {
 				comments: {}
 			}
+		},
+		components: {
+			star
 		},
 		created(){
 			this.$http.get('/api/comments').then((response) => {
@@ -100,11 +111,18 @@
 		padding-top: 12px;
 	}
 	.scorecontent-text{
+		display: flex;
 		text-align: left;
 		padding-bottom: 8px;
 		font-size: 12px;
 		line-height: 18px;
 		color: rgb(7,17,27);
+	}
+	.service{
+		padding-left: 8px;
+	}
+	.food{
+		padding-left: 8px;
 	}
 	.deliveryTime{
 		text-align: left;
@@ -126,7 +144,6 @@
 		height: 100%;
 		border-top: 2px solid rgba(7,17,27,0.1);
 		background-color: #fff;
-
 	}
 	.blockpos{
 		position: relative;

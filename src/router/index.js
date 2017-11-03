@@ -3,7 +3,7 @@ import Router from 'vue-router'
 //import HelloWorld from '@/components/HelloWorld'
 import goods from './../components/goods'
 import comments from './../components/comments'
-import seller from './../components/seller'
+import store from './../components/store'
 
 Vue.use(Router)
 
@@ -30,9 +30,9 @@ export default new Router({
       component: comments
     },
     {
-      path: '/seller',
-      name: 'seller',
-      component: seller
+      path: '/store',
+      name: 'store',
+      component: store
     }
   ]
 })

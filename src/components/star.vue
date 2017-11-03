@@ -1,11 +1,10 @@
 <template>
-	<div class="star">
-		<span v-for="classitem in classitems" v-bind:class="[classitem,starType]"></span>
+	<div>
+		<div v-for="classitem in classitems" v-bind:class="[classitem,starType]"></div>
 	</div>
 </template>
 
 <script>
-	let result = [];
 	export default{
 		props: {
 			size: {
@@ -17,7 +16,8 @@
 		},
 		data(){
 			return {
-				starType: 'star-' + this.size
+				starType: 'star-' + this.size,
+				result: []
 			}
 		},
 		computed: {
@@ -29,6 +29,7 @@
 				let score = Math.floor(this.score * 2) / 2;
 				let isInt = score%1 == 0;
 				let int = Math.floor(score);
+				let result = this.result;
 				for(let i = 0; i < int; i++){
 					result.push(on);
 				}
@@ -48,12 +49,12 @@
 </script>
 
 <style scoped>
-
 	.star-24{
 		width: 10px;
         height: 10px;
         margin-right: 3px;
 		background-size: 100% 100%;
+		display: inline-block; 
 	}
 	.star-24:last-child{
 		margin-right: 0;
@@ -73,6 +74,7 @@
         height: 15px;
         margin-right: 6px;
         background-size: 100% 100%;
+        display: inline-block; 
 	}
 	.star-36:last-child{
 		margin-right: 0;
@@ -92,6 +94,7 @@
         height: 20px;
         margin-right: 22px;
         background-size: 100% 100%;
+        display: inline-block; 
 	}
 	.star-48:last-child{
 		margin-right: 0;
