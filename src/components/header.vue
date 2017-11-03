@@ -5,9 +5,9 @@
 				<img width="64" height="64" style="border-radius: 4px" v-bind:src="seller.data.avatar" alt="">
 			</div>
 			<div class="content">
-				<div class="first">{{seller.data.name}}</div>
+				<div class="first"><span class="brandfirst"></span>{{seller.data.name}}</div>
 				<div class="second">{{seller.data.description}}/{{seller.data.deliveryTime}}分钟送达</div>
-				<div class="third">{{seller.data.supports[0].description}}</div>
+				<div class="third"><span class="brandthird"></span>{{seller.data.supports[0].description}}</div>
 				<div class="support" v-if="seller.data.supports" v-on:click="display">
 					<span class="count">{{seller.data.supports.length}}个</span>
 					<span class="icon-keyboard_arrow_right icon-arrow"></span>
@@ -26,6 +26,7 @@
 			<div class="detail-main clearfix">
 				<div class="detail-content">
 					<div class="name">{{seller.data.name}}</div>
+					<star v-bind:size="48" v-bind:score="seller.data.score"></star>
 				</div>
 			</div>
 			<div class="detail-close" v-on:click="display">
@@ -36,6 +37,7 @@
 </template>
 
 <script>
+	import star from '@/components/star'
 	export default {
 		props: {
 			seller:{
@@ -44,6 +46,9 @@
 		},
 		data(){
 			return {show: false}
+		},
+		components: {
+			star
 		},
 		methods: {
 			display(){
@@ -86,6 +91,15 @@
 		font-weight: bold;
 		line-height: 16px;
 	}
+	.brandfirst{
+		background-image: url('./../assets/brand@2x.png');
+		background-size: 100% 100%;
+		display: inline-block;
+		vertical-align: top;
+		margin-right: 6px;
+        width: 27px;
+        height: 16px;
+	}
 	.second{
 		margin-bottom: 10px; 
 		font-size: 12px;
@@ -98,6 +112,15 @@
 		color: rgb(255,255,255);
 		font-weight: 200;
 		line-height: 12px;
+	}
+	.brandthird{
+		background-image: url('./../assets/decrease_1@3x.png');
+		background-size: 100% 100%;
+		display: inline-block;
+		vertical-align: middle;
+		margin-right: 4px;
+        width: 12px;
+        height: 12px;
 	}
 	.support{
 		position: absolute;
