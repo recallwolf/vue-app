@@ -9,11 +9,13 @@
 			<div class="score-content">
 				<div class="scorecontent-text">
 					服务态度 
-					<span><star class="service" v-bind:size="24" v-bind:score="seller.data.serviceScore"></star></span>
+					<star class="service" v-bind:size="24" v-bind:score="seller.data.serviceScore"></star>
+					<div class="orangeScore">{{seller.data.serviceScore}}</div>
 				</div>
 				<div class="scorecontent-text">
 					商品评分
 					<star class="food" v-bind:size="24" v-bind:score="seller.data.foodScore"></star>
+					<div class="orangeScore">{{seller.data.foodScore}}</div>
 				</div>
 				<div class="deliveryTime">
 					送达时间
@@ -81,7 +83,7 @@
 		padding-top: 18px;
 		padding-bottom: 18px;
 		background-color: #fff;
-		border-bottom: 2px solid rgba(7,17,27,0.1);
+		border-bottom: 1px solid rgba(7,17,27,0.1);
 	}
 	.score-main{
 		flex: 0 0 138px;
@@ -124,6 +126,12 @@
 	.food{
 		padding-left: 8px;
 	}
+	.orangeScore{
+		padding-left: 12px;
+		font-size: 12px;
+		line-height: 18px;
+		color: rgb(255,153,0);
+	}
 	.deliveryTime{
 		text-align: left;
 		font-size: 12px;
@@ -138,11 +146,11 @@
 	}
 	.line{
 		height: 18px;
-		background-color: rgba(7,17,27,0.1);
+		background-color: #f3f5f7;
 	}
 	.score-detail{
 		height: 100%;
-		border-top: 2px solid rgba(7,17,27,0.1);
+		border-top: 1px solid rgba(7,17,27,0.1);
 		background-color: #fff;
 	}
 	.blockpos{

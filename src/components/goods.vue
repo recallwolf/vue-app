@@ -130,7 +130,7 @@
 		width: 100%;
 		position: absolute;
 		bottom: 46px;
-		top: 174px;
+		top: 176px;
 	}
 	.menu{
 		flex: 0 0 80px;

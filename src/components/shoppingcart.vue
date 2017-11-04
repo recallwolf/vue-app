@@ -57,7 +57,6 @@
 <script>
 	import bscroll from 'better-scroll'
 	import clickbutton from '@/components/clickbutton'
-	import Vue from 'vue'
 	export default{
 		props: {
 			seller: {
@@ -97,7 +96,7 @@
 			},
 		},
 		created(){
-			Vue.nextTick(() => {
+			this.$nextTick(() => {
 				this.scroll = new bscroll(this.$refs.cartitem, {
                 	click: true
             	});
@@ -106,7 +105,7 @@
 		watch: {
 			cartShow: function(){
 				if(this.cartShow) {
-          			Vue.nextTick(() => {
+          			this.$nextTick(() => {
           				this.scroll.refresh();
    					});
    				}

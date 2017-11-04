@@ -187,7 +187,7 @@
 		z-index: 100;
 		height: 100%;
 		width: 100%;
-		background-color: rgba(7,17,27,0.8);
+		background-color: rgba(7,17,27,0.9);
 	}
 	.clearfix{
 		display: inline-block;
