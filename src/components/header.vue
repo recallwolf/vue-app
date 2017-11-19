@@ -54,7 +54,7 @@
 
 <script>
 	import star from '@/components/star'
-	export default {
+	export default{
 		props: {
 			seller:{
 				type: Object
@@ -184,7 +184,7 @@
 		position: fixed;
 		top: 0;
 		left: 0;
-		z-index: 100;
+		z-index: 150;
 		height: 100%;
 		width: 100%;
 		background-color: rgba(7,17,27,0.9);

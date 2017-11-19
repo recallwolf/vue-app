@@ -1,39 +1,42 @@
 <template>
-	<div class="goods">
-		<div class="menu" ref="menu">
-			<ul>
-				<li class="list" v-for="(good,index) in goods.data" v-bind:class="{current: index===currentIndex}" v-on:click="selectMenu(index)">
-					<span class="me-content" v-bind:class="{'current-content': index===currentIndex}">{{good.name}}</span>
-				</li>
-			</ul>
-		</div>
-		<div class="goods-content" ref="goods">
-			<ul>
-				<li v-for="good in goods.data"  class="list-hook">
-					<div class="food-title">{{good.name}}</div>
-					<ul>
-						<li v-for="food in good.foods" class="food-item">
-							<div>
-								<div class="food-icon"><img v-bind:src="food.icon" width="57" height="57"></div>
-								<div class="food-content">
-									<div class="food-name">{{food.name}}</div>
-									<div class="food-des" v-if="food.description!=''">{{food.description}}</div>
-									<div class="food-count">月售:{{food.sellCount}}份 好评率:{{food.rating}}%</div>
-									<div class="food-price">
-										¥{{food.price}} 
-										<span class="food-old" v-show="food.oldPrice!=''">
-											¥{{food.oldPrice}}
-										</span>
+	<div>
+		<div class="goods">
+			<div class="menu" ref="menu">
+				<ul>
+					<li class="list" v-for="(good,index) in goods.data" v-bind:class="{current: index===currentIndex}" v-on:click="selectMenu(index)">
+						<span class="me-content" v-bind:class="{'current-content': index===currentIndex}">{{good.name}}</span>
+					</li>
+				</ul>
+			</div>
+			<div class="goods-content" ref="goods">
+				<ul>
+					<li v-for="good in goods.data"  class="list-hook">
+						<div class="food-title">{{good.name}}</div>
+						<ul>
+							<li v-for="food in good.foods" class="food-item">
+								<div>
+									<div class="food-icon" v-on:click="selectFood(food)"><img v-bind:src="food.icon" width="57" height="57"></div>
+									<div class="food-content">
+										<div class="food-name">{{food.name}}</div>
+										<div class="food-des" v-if="food.description!=''">{{food.description}}</div>
+										<div class="food-count">月售:{{food.sellCount}}份 好评率:{{food.rating}}%</div>
+										<div class="food-price">
+											¥{{food.price}} 
+											<span class="food-old" v-show="food.oldPrice!=''">
+												¥{{food.oldPrice}}
+											</span>
+										</div>
+										<clickbutton v-bind:food="food" v-bind:cartList="cartList" class="iconx"></clickbutton>
 									</div>
-									<clickbutton v-bind:food="food" v-bind:cartList="cartList" class="iconx"></clickbutton>
 								</div>
-							</div>
-						</li>
-					</ul>
-				</li>
-			</ul>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<cart v-bind:seller="seller" v-bind:cartList="cartList" v-bind:clear="clear"></cart>
 		</div>
-		<cart v-bind:seller="seller" v-bind:cartList="cartList" v-bind:clear="clear"></cart>
+		<detail v-if="detail" v-bind:food="selectedFood" v-on:close="selectFood"></detail>
 	</div>
 </template>
 
@@ -41,6 +44,7 @@
     import bscroll from 'better-scroll'
     import cart from '@/components/shoppingcart'
     import clickbutton from '@/components/clickbutton'
+	import detail from '@/components/detail'
 	export default{
 		props: {
 			seller: {
@@ -53,11 +57,14 @@
 				cartList: [],
 				listHeight: [],
 				scrollY: 0,
+				selectedFood: {},
+				detail: false
 			}
 		},
 		components: {
 			cart,
-			clickbutton
+			clickbutton,
+			detail
 		},
 		computed: {
 			currentIndex(){
@@ -119,6 +126,10 @@
 					this.cartList[index].count = 0;
 				}
 				this.cartList.length = 0;	
+			},
+			selectFood(food){
+				this.selectedFood = food;
+				this.detail = !this.detail;
 			}
 		}
 	}

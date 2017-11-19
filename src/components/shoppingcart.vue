@@ -127,6 +127,7 @@
 		height: 48px;
 		background-color: #141d27;
 		bottom: 0px;
+		z-index: 100;
 	}
 	.icon{
 		flex: 0 0 60px;
