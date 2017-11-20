@@ -13,22 +13,45 @@
 						好评率{{food.rating}}%
 					</div>
 				</div>
-				<div class="price">¥{{food.price}}</div>
+				<div class="price">
+					¥{{food.price}}
+					<div class="oldPrice" v-show="food.oldPrice!=''">
+						¥{{food.oldPrice}}
+					</div>
+					<div class="add" v-if="!food.count || food.count===0" v-on:click="add"><p class="addText">加入购物车</p></div>
+					<clickbutton class="button" v-if="food.count && food.count != 0" v-bind:food="food" v-bind:cartList="cartList"></clickbutton>
+				</div>
 			</div>
+			<div class="line"></div>
 		</div>
 	</div>
 </template>
 
 <script>
+	import Vue from 'vue'
+	import clickbutton from '@/components/clickbutton'
 	export default{
 		props: {
 			food: {
 				type: Object
+			},
+			cartList: {
+				type: Array
 			}
+		},
+		components: {
+			clickbutton
 		},
 		methods: {
 			close(){
 				this.$emit("close");
+			},
+			add(){
+				if(this.food.count == false||this.food.count == undefined){
+					Vue.set(this.food, 'count', 0);
+					this.cartList.push(this.food);
+				}
+				this.food.count++;			
 			}
 		}
 	}
@@ -46,6 +69,7 @@
 		z-index: 50;
 	}
 	.arrow{
+		display: block;
 		position: absolute;
 		top: 10px;
 		left: 0;
@@ -70,6 +94,7 @@
 	}
 	.main{
 		padding-left: 18px;
+		padding-bottom: 18px;
 	}
 	.detailTitle{
 		padding-top: 18px;
@@ -97,5 +122,40 @@
 		color: rgb(240,20,20);
 		line-height: 24px;
 		text-align: left;
+	}
+	.oldPrice{
+		display: inline-block;
+		padding-left: 6px;
+		font-size: 12px;
+		font-weight: 700;
+		color: rgb(147,153,159);
+		line-height: 24px;
+		text-decoration: line-through;
+	}
+	.add{
+		display: inline-block;
+		position: absolute;
+		right: 18px;
+		height: 24px;
+		width: 74px;
+		border-radius: 12px;
+		background-color: rgb(0,160,220);
+		text-align: center;
+	}
+	.button{
+		display: inline-block;
+		position: absolute;
+		right: 18px;
+	}
+	.addText{
+		padding-top: 7px;
+		font-size: 10px;
+		font-weight: normal;
+		line-height: 12px;
+		color: rgb(255,255,255);
+	}
+	.line{
+		height: 18px;
+		background-color: #f3f5f7;
 	}
 </style>

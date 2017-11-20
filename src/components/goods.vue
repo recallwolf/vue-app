@@ -17,10 +17,10 @@
 								<div>
 									<div class="food-icon" v-on:click="selectFood(food)"><img v-bind:src="food.icon" width="57" height="57"></div>
 									<div class="food-content">
-										<div class="food-name">{{food.name}}</div>
-										<div class="food-des" v-if="food.description!=''">{{food.description}}</div>
-										<div class="food-count">月售:{{food.sellCount}}份 好评率:{{food.rating}}%</div>
-										<div class="food-price">
+										<div class="food-name" v-on:click="selectFood(food)">{{food.name}}</div>
+										<div class="food-des" v-on:click="selectFood(food)" v-if="food.description!=''">{{food.description}}</div>
+										<div class="food-count" v-on:click="selectFood(food)">月售:{{food.sellCount}}份 好评率:{{food.rating}}%</div>
+										<div class="food-price" v-on:click="selectFood(food)">
 											¥{{food.price}} 
 											<span class="food-old" v-show="food.oldPrice!=''">
 												¥{{food.oldPrice}}
@@ -36,7 +36,7 @@
 			</div>
 			<cart v-bind:seller="seller" v-bind:cartList="cartList" v-bind:clear="clear"></cart>
 		</div>
-		<detail v-if="detail" v-bind:food="selectedFood" v-on:close="selectFood"></detail>
+		<detail v-if="detail" v-bind:food="selectedFood" v-bind:cartList="cartList" v-on:close="selectFood"></detail>
 	</div>
 </template>
 

@@ -188,6 +188,7 @@
 		height: 100%;
 		width: 100%;
 		background-color: rgba(7,17,27,0.9);
+		overflow: auto;
 	}
 	.clearfix{
 		display: inline-block;
