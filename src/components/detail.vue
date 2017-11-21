@@ -1,5 +1,5 @@
 <template>
-	<div class="foodDetail">
+	<div class="foodDetail" ref="food">
 		<div>
 			<div class="icon-arrow_lift arrow" v-on:click="close"></div>
 			<div class="image">
@@ -23,13 +23,24 @@
 				</div>
 			</div>
 			<div class="line"></div>
+			<div class="totalIntro" v-show="food.info">
+				<div class="intro">商品介绍</div>
+				<div class="info">{{food.info}}</div>
+			</div>
+			<div class="line" v-show="food.info"></div>
+			<div class="foodRating">
+				<div class="ratingTitle">商品评价</div>
+				<rating v-bind:ratings="food.ratings"></rating>
+			</div>
 		</div>
 	</div>
 </template>
 
 <script>
 	import Vue from 'vue'
+	import bscroll from 'better-scroll'
 	import clickbutton from '@/components/clickbutton'
+	import rating from '@/components/rating'
 	export default{
 		props: {
 			food: {
@@ -40,7 +51,20 @@
 			}
 		},
 		components: {
-			clickbutton
+			clickbutton,
+			rating
+		},
+		created(){
+			this.$nextTick(() => {
+				if(!this.scroll){
+            		this.scroll = new bscroll(this.$refs.food, {
+              			click: true
+            		});
+				} 
+				else{
+            		this.scroll.refresh();
+          		}
+			});
 		},
 		methods: {
 			close(){
@@ -67,6 +91,7 @@
 		width: 100%;
 		background-color: #fff;
 		z-index: 50;
+		overflow: hidden;
 	}
 	.arrow{
 		display: block;
@@ -148,7 +173,7 @@
 		right: 18px;
 	}
 	.addText{
-		padding-top: 7px;
+		padding-top: 6px;
 		font-size: 10px;
 		font-weight: normal;
 		line-height: 12px;
@@ -157,5 +182,35 @@
 	.line{
 		height: 18px;
 		background-color: #f3f5f7;
+	}
+	.totalIntro{
+		padding: 18px 18px;
+		text-align: left;
+	}
+	.intro{
+		font-size: 14px;
+		line-height: 14px;
+		color: rgb(7,17,27);
+		font-weight: normal;
+		padding-bottom: 6px;
+	}
+	.info{
+		padding-left: 8px;
+		padding-right: 8px;
+		font-size: 12px;
+		line-height: 24px;
+		font-weight: 300;
+		color: rgb(77,85,93);
+	}
+	.foodRating{
+		text-align: left;
+	}
+	.ratingTitle{
+		padding: 18px 18px;
+		font-size: 14px;
+		line-height: 14px;
+		color: rgb(7,17,27);
+		font-weight: normal;
+		padding-bottom: 18px;
 	}
 </style>

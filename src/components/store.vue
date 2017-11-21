@@ -1,6 +1,6 @@
 <template>
 	<div class="seller" ref="seller">
-		<div ref="seller">
+		<div>
 			<div class="seller-main">
 				<div class="seller-main-text">{{seller.data.name}}</div>
 				<div class="seller-star" >
