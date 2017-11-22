@@ -37,7 +37,7 @@
 			</div>
 			<div class="cartitem" ref="cartitem">
 				<ul>
-					<li v-for="item in cartList">
+					<li v-for="(item, index) in cartList" v-bind:key="index">
 						<div class="layout">
 							<div class="itemname">
 								{{item.name}}/{{item.count}}份

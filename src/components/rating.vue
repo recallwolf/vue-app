@@ -13,7 +13,7 @@
     	</div>
         <div class="ratingContent">
 			<ul>
-				<li class="list" v-for="rating in ratings">
+				<li class="list" v-for="(rating, index) in processedRating" v-show="isShow(rating.rateType, rating.text)" v-bind:key="index">
 					<div class="userTitle">
 						<div class="time">{{rating.rateTime | formatDate}}</div>
 						<div class="userInfo">
@@ -33,6 +33,7 @@
 
 <script>
  	import {formatDate} from './../common/js/date'
+	import bscroll from 'better-scroll'
     export default {
         props: {
 			ratings: {
@@ -42,22 +43,42 @@
         data(){
             return {
                 state: 2,
-                isCheck: false
+                isCheck: true,
+				processedRating: this.ratings,
             }
         },
         methods:{
             all(){
                 this.state = 2;
+				this.processedRating = this.ratings;
+				this.$emit("refresh");
             },
             positive(){
                 this.state = 0;
-            },
+        		this.processedRating = this.ratings.filter((rating) => {
+          			return rating.rateType === 0;
+				});
+				this.$emit("refresh");
+			},
             negative(){
                 this.state = 1;
+				this.processedRating = this.ratings.filter((rating) => {
+          			return rating.rateType === 1;
+				});
+				this.$emit("refresh");
             },
             check(){
-                this.isCheck = !this.isCheck;
-            }
+				this.isCheck = !this.isCheck;
+				this.$emit("refresh");
+			},
+			isShow(type, text){
+				if(this.isCheck && !text){	
+          			return false;
+        		}
+				else{
+         			return true;
+       			}
+			}
 		},
 		filters: {
       		formatDate(time) {

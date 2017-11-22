@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div v-for="classitem in classitems" v-bind:class="[classitem,starType]"></div>
+		<div v-for="(classitem, index) in classitems" v-bind:class="[classitem,starType]" v-bind:key="index"></div>
 	</div>
 </template>
 

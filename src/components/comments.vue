@@ -25,7 +25,7 @@
 				</div>
 			</div>
 			<div class="line"></div>
-			<rating class="rating" v-bind:ratings="comments.data"></rating>
+			<rating class="rating" v-if="comments.data" v-bind:ratings="comments.data" v-on:refresh="refresh"></rating>
 		</div>
 	</div>
 </template>
@@ -61,6 +61,13 @@
 					});
 				}
 			});
+		},
+		methods: {
+			refresh(){
+				this.$nextTick(() => {
+					this.commentsScroll.refresh();
+				});
+			}
 		}
 	}
 </script>

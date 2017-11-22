@@ -22,33 +22,35 @@
 		<div class="background">
 			<img v-bind:src="seller.data.avatar" width="100%" height="100%">
 		</div>
-		<div class="detail" v-if="show">
-			<div class="detail-main clearfix">
-				<div class="detail-content">
-					<div class="name">{{seller.data.name}}</div>
-					<star class="detail-star" v-bind:size="48" v-bind:score="seller.data.score"></star>
-					<div class="report-x">
-						<div class="line-1"></div>
-						<div class="discount">优惠信息</div>
-						<div class="line-1"></div>
-					</div>
-					<div class="detail-discount" v-for="detailItem in seller.data.supports">
-						<div class="discount-item">{{detailItem.description}}</div>
-					</div>
-					<div class="detail-report">
+		<transition name="fade">
+			<div class="detail" v-if="show">
+				<div class="detail-main clearfix">
+					<div class="detail-content">
+						<div class="name">{{seller.data.name}}</div>
+						<star class="detail-star" v-bind:size="48" v-bind:score="seller.data.score"></star>
 						<div class="report-x">
-							<div class="line-2"></div>
-							<div class="detail-report-main">商家公告</div>
-							<div class="line-2"></div>
+							<div class="line-1"></div>
+							<div class="discount">优惠信息</div>
+							<div class="line-1"></div>
 						</div>
-						<div class="detail-report-text">{{seller.data.bulletin}}</div>
+						 <div class="detail-discount" v-for="(detailItem, index) in seller.data.supports" v-bind:key="index">
+							<div class="discount-item">{{detailItem.description}}</div>
+						</div>
+						<div class="detail-report">
+							<div class="report-x">
+								<div class="line-2"></div>
+								<div class="detail-report-main">商家公告</div>
+								<div class="line-2"></div>
+							</div>
+							<div class="detail-report-text">{{seller.data.bulletin}}</div>
+						</div>
 					</div>
 				</div>
+				<div class="detail-close" v-on:click="display">
+					<span class="icon-close icon-x"></span>
+				</div>
 			</div>
-			<div class="detail-close" v-on:click="display">
-				<span class="icon-close icon-x"></span>
-			</div>
-		</div>
+		</transition>
 	</div>
 </template>
 
@@ -75,6 +77,15 @@
 </script>
 
 <style scoped>
+	.fade-enter-active{
+		transition: all 0.5s;
+	}
+	.fade-leave-active{
+		transition: all 0.3s;
+	}
+	.fade-enter, .fade-leave-active{
+		opacity: 0;
+	}
 	.header{
 		display: flex;
 		flex-direction: column;

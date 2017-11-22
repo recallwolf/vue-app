@@ -3,17 +3,17 @@
 		<div class="goods">
 			<div class="menu" ref="menu">
 				<ul>
-					<li class="list" v-for="(good,index) in goods.data" v-bind:class="{current: index===currentIndex}" v-on:click="selectMenu(index)">
+					<li class="list" v-for="(good,index) in goods.data" v-bind:key="index" v-bind:class="{current: index===currentIndex}" v-on:click="selectMenu(index)">
 						<span class="me-content" v-bind:class="{'current-content': index===currentIndex}">{{good.name}}</span>
 					</li>
 				</ul>
 			</div>
 			<div class="goods-content" ref="goods">
 				<ul>
-					<li v-for="good in goods.data"  class="list-hook">
+					<li v-for="(good, index) in goods.data" v-bind:key="index" class="list-hook">
 						<div class="food-title">{{good.name}}</div>
 						<ul>
-							<li v-for="food in good.foods" class="food-item">
+							<li v-for="(food, index) in good.foods" class="food-item" v-bind:key="index">
 								<div>
 									<div class="food-icon" v-on:click="selectFood(food)"><img v-bind:src="food.icon" width="57" height="57"></div>
 									<div class="food-content">
@@ -244,7 +244,7 @@
 		text-decoration: line-through;
 	}
 	.iconx{
-		display: inline-block;
+		display: block;
 		float: left;
 		padding-top: 3px;
 	}

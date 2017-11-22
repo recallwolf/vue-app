@@ -1,39 +1,43 @@
 <template>
-	<div class="foodDetail" ref="food">
-		<div>
-			<div class="icon-arrow_lift arrow" v-on:click="close"></div>
-			<div class="image">
-				<img v-bind:src="food.image">
-			</div>
-			<div class="main">
-				<div class="detailTitle">{{food.name}}</div>
-				<div class="detailSubheading">
-					月售{{food.sellCount}}份
-					<div class="rating">
-						好评率{{food.rating}}%
+	<transition name="move">
+		<div class="foodDetail" ref="food">
+			<div>
+				<div class="icon-arrow_lift arrow" v-on:click="close"></div>
+				<div class="image">
+					<img v-bind:src="food.image">
+				</div>
+				<div class="main">
+					<div class="detailTitle">{{food.name}}</div>
+					<div class="detailSubheading">
+						月售{{food.sellCount}}份
+						<div class="rating">
+							好评率{{food.rating}}%
+						</div>
+					</div>
+					<div class="price">
+						¥{{food.price}}
+						<div class="oldPrice" v-show="food.oldPrice!=''">
+							¥{{food.oldPrice}}
+						</div>
+						<transition name="fade">
+							<div class="add" v-if="!food.count || food.count===0" v-on:click="add"><p class="addText">加入购物车</p></div>
+						</transition>
+						<clickbutton class="button" v-if="food.count && food.count != 0" v-bind:food="food" v-bind:cartList="cartList"></clickbutton>
 					</div>
 				</div>
-				<div class="price">
-					¥{{food.price}}
-					<div class="oldPrice" v-show="food.oldPrice!=''">
-						¥{{food.oldPrice}}
-					</div>
-					<div class="add" v-if="!food.count || food.count===0" v-on:click="add"><p class="addText">加入购物车</p></div>
-					<clickbutton class="button" v-if="food.count && food.count != 0" v-bind:food="food" v-bind:cartList="cartList"></clickbutton>
+				<div class="line"></div>
+				<div class="totalIntro" v-show="food.info">
+					<div class="intro">商品介绍</div>
+					<div class="info">{{food.info}}</div>
 				</div>
-			</div>
-			<div class="line"></div>
-			<div class="totalIntro" v-show="food.info">
-				<div class="intro">商品介绍</div>
-				<div class="info">{{food.info}}</div>
-			</div>
-			<div class="line" v-show="food.info"></div>
-			<div class="foodRating">
-				<div class="ratingTitle">商品评价</div>
-				<rating v-bind:ratings="food.ratings"></rating>
+				<div class="line" v-show="food.info"></div>
+				<div class="foodRating">
+					<div class="ratingTitle">商品评价</div>
+					<rating v-bind:ratings="food.ratings" v-on:refresh="refresh"></rating>
+				</div>
 			</div>
 		</div>
-	</div>
+	</transition>
 </template>
 
 <script>
@@ -76,15 +80,35 @@
 					this.cartList.push(this.food);
 				}
 				this.food.count++;			
+			},
+			refresh(){
+				this.$nextTick(() => {
+					this.scroll.refresh();
+				});
 			}
 		}
 	}
 </script>
 
 <style scoped>
+	.move-enter-active, .move-leave-active{
+		transition: all 0.2s linear;
+	}
+	.move-enter, .move-leave-active{
+		transform: translate(100%, 0);
+	}
+	.fade-enter-active{
+		transition: all 0.5s;
+	}
+	.fade-leave-active{
+		transition: all 0.5s linear;
+	}
+	.fade-enter, .fade-leave-active{
+		transform: translate(100%, 0);
+		opacity: 0;
+	}
 	.foodDetail{
-		display: fixed;
-		position: absolute;
+		position: fixed;
 		top: 0;
 		left: 0;
 		bottom: 48px;

@@ -36,7 +36,7 @@
 			<div class="seller-content">
 				<div class="title">公告与活动</div>
 				<div class="text">{{seller.data.bulletin}}</div>
-				<div class="text-nav" v-for="detailItem in seller.data.supports">
+				<div class="text-nav" v-for="(detailItem, index) in seller.data.supports" v-bind:key="index">
 					<div class="text-main">{{detailItem.description}}</div>
 				</div>
 			</div>
@@ -45,7 +45,7 @@
 				<div class="title-2">商家实景</div>
 				<div class="pic" ref="pic">
 					<ul class="picList" ref="picList">
-            			<li class="picDetail" v-for="pic in seller.data.pics">
+            			<li class="picDetail" v-for="(pic, index) in seller.data.pics" v-bind:key="index">
               				<img v-bind:src="pic" width="120" height="90">
             			</li>
           			</ul>
@@ -54,7 +54,7 @@
 			<div class="line"></div>
 			<div class="info">
 				<div class="title-2">商家信息</div>
-				<div class="info-text" v-for="info in seller.data.infos">
+				<div class="info-text" v-for="(info, index) in seller.data.infos" v-bind:key="index">
 					<div class="info-main">{{info}}</div>
 				</div>
 			</div>

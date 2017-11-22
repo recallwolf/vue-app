@@ -1,7 +1,11 @@
 <template>
-	<div> 
-		<span class="icon-remove_circle_outline icon-remove" v-on:click="del" v-show="food.count"></span>
-		<span class="num" v-show="food.count">{{food.count}}</span>
+	<div>
+		<transition name="move">
+			<span class="icon-remove_circle_outline icon-remove" v-on:click="del" v-show="food.count"></span>
+		</transition>
+		<transition name="move">
+			<span class="num" v-show="food.count">{{food.count}}</span>
+		</transition>
 		<span class="icon-add_circle icon-add" v-on:click="add"></span>
 	</div>
 </template>
@@ -26,7 +30,9 @@
 				this.food.count++;			
 			},
 			del(){
-				this.food.count--;
+				if(this.food.count){
+					this.food.count--;
+				}
 				if(this.food.count === 0){
 					let foodName = this.food.name;
 					for(let x in this.cartList){
@@ -49,6 +55,12 @@
 </script>
 
 <style>
+	.move-enter-active, .move-leave-active{
+		transition: all 0.4s linear;
+	}
+	.move-enter, .move-leave-active{
+		transform: translate(100%, 0) rotate(180deg);
+	}
 	.icon-remove{
 		position: absolute;
 		right: 60px;
