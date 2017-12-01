@@ -22,7 +22,7 @@
 						<transition name="fade">
 							<div class="add" v-if="!food.count || food.count===0" v-on:click="add"><p class="addText">加入购物车</p></div>
 						</transition>
-						<clickbutton class="button" v-if="food.count && food.count != 0" v-bind:food="food" v-bind:cartList="cartList"></clickbutton>
+						<clickbutton class="button"  v-on:add="addFood" v-if="food.count && food.count != 0" v-bind:food="food" v-bind:cartList="cartList"></clickbutton>
 					</div>
 				</div>
 				<div class="line"></div>
@@ -72,20 +72,24 @@
 		},
 		methods: {
 			close(){
-				this.$emit("close");
+				this.$emit('close');
 			},
 			add(){
 				if(this.food.count == false||this.food.count == undefined){
 					Vue.set(this.food, 'count', 0);
 					this.cartList.push(this.food);
 				}
+				this.$emit('add', event.target);
 				this.food.count++;			
 			},
 			refresh(){
 				this.$nextTick(() => {
 					this.scroll.refresh();
 				});
-			}
+			},
+			addFood(target) {
+        		this.$emit('add', target);
+      		}
 		}
 	}
 </script>

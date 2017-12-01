@@ -26,7 +26,7 @@
 												¥{{food.oldPrice}}
 											</span>
 										</div>
-										<clickbutton v-bind:food="food" v-bind:cartList="cartList" class="iconx"></clickbutton>
+										<clickbutton v-on:add="addFood" v-bind:food="food" v-bind:cartList="cartList" class="iconx"></clickbutton>
 									</div>
 								</div>
 							</li>
@@ -34,9 +34,9 @@
 					</li>
 				</ul>
 			</div>
-			<cart v-bind:seller="seller" v-bind:cartList="cartList" v-bind:clear="clear"></cart>
+			<cart ref="cart" v-bind:seller="seller" v-bind:cartList="cartList" v-bind:clear="clear"></cart>
 		</div>
-		<detail v-if="detail" v-bind:food="selectedFood" v-bind:cartList="cartList" v-on:close="selectFood"></detail>
+		<detail v-on:add="addFood" v-if="detail" v-bind:food="selectedFood" v-bind:cartList="cartList" v-on:close="selectFood"></detail>
 	</div>
 </template>
 
@@ -130,7 +130,15 @@
 			selectFood(food){
 				this.selectedFood = food;
 				this.detail = !this.detail;
-			}
+			},
+			addFood(target) {
+        		this._drop(target);
+      		},
+      		_drop(target) {
+        		this.$nextTick(() => {
+          			this.$refs.cart.drop(target);
+        		});
+			}		
 		}
 	}
 </script>

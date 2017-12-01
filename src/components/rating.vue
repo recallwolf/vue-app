@@ -58,18 +58,18 @@
         		this.processedRating = this.ratings.filter((rating) => {
           			return rating.rateType === 0;
 				});
-				this.$emit("refresh");
+				this.$emit('refresh');
 			},
             negative(){
                 this.state = 1;
 				this.processedRating = this.ratings.filter((rating) => {
           			return rating.rateType === 1;
 				});
-				this.$emit("refresh");
+				this.$emit('refresh');
             },
             check(){
 				this.isCheck = !this.isCheck;
-				this.$emit("refresh");
+				this.$emit('refresh');
 			},
 			isShow(type, text){
 				if(this.isCheck && !text){	

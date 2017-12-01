@@ -27,7 +27,8 @@
 					Vue.set(this.food, 'count', 0);
 					this.cartList.push(this.food);
 				}
-				this.food.count++;			
+				this.food.count++;
+				this.$emit('add', event.target);		
 			},
 			del(){
 				if(this.food.count){
