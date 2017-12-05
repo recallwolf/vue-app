@@ -43,7 +43,6 @@
 						});	
 						if(index >= 0){
 							this.cartList.splice(x,1);
-
 						}
 					}
 					if(this.cartList.length === 0){
